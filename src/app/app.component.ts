@@ -8,11 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class AppComponent implements OnInit {
- 
+   title = 'My first angular app!';
+
  constructor(){
 
  }
- 
+
  ngOnInit(){
 
  }

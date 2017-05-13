@@ -12,7 +12,6 @@ export class HeroComponent implements OnInit {
 
    heroes: Hero[];
   selectedHero: Hero;
-  title = 'My first angular app!';
 
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
