@@ -1,22 +1,52 @@
-import { Injectable } from '@angular/core'; 
-import {Hero} from '../hero';
-import {HEROES} from '../mock-heroes';
+import { Injectable } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+import { Hero } from '../hero';
+import { HEROES } from '../mock-heroes';
 
 @Injectable()
 export class HeroService {
 
-  constructor() { }
+  constructor(private http: Http) {
+
+  }
 
   getHeroes(): Promise<Hero[]> {
-    return new Promise(r=>{
-        setTimeout(()=>r(HEROES),200);
-    });
+    return this.http.get('/api/heroes').toPromise()
+      .then(response => response.json().data as Hero[])
+      .catch(this.handleError);
   }
 
-  getHero(id:number): Promise<Hero>{
-    return this.getHeroes().then((h)=>h.find(x=>x.id === id));
+  handleError(error: any) {
+    console.error(error);
+    return Promise.reject(error.message || error);
   }
 
+  getHero(id: number): Promise<Hero> {
+    return this.http.get(`/api/heroes/${id}`)
+      .toPromise().then(response => response.json().data as Hero)
+      .catch(this.handleError);
+  }
+
+  updateHero(hero: Hero) {
+    let url = `/api/heroes/${hero.id}`;
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    return this.http.put(url, JSON.stringify(hero), { headers: headers })
+      .toPromise()
+      .then(() => hero)
+      .catch(this.handleError);
+  }
+
+  create(name: string): Promise<Hero> {
+    let headers = { headers: new Headers({ 'Content-Type': 'application/json' }) };
+    let url = "/api/heroes/";
+    let data = JSON.stringify({ name: name });
+
+    return this.http.post(url, data, headers)
+      .toPromise()
+      .then(res => res.json().data as Hero)
+      .catch(this.handleError);
+  }
 
 }
 
