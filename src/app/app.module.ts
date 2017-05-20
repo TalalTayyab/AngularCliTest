@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HeroComponent } from './hero/hero.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HighlightDirectiveDirective } from './highlight-directive.directive';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HeroDetailComponent,
     HeroComponent,
     DashboardComponent,
+    HighlightDirectiveDirective,
   ],
   imports: [
     BrowserModule,
